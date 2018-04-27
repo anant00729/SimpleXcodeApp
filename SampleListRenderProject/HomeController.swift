@@ -8,43 +8,37 @@
 
 import UIKit
 
-class HomeController : UIViewController {
+class HomeController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    
-    let textView : UITextView = {
-        let tv = UITextView()
-        tv.text = "This is the center text for display"
-        tv.textColor = UIColor.white
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        return tv
-    }()
+    var i = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Home Page"
-        view.backgroundColor = UIColor.green
+        collectionView?.backgroundColor = UIColor.green
         
-        addViews()
+        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
         
     }
     
-    func addViews(){
-        view.addSubview(textView)
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
+        cell.backgroundColor = UIColor.white
         
-        textView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        textView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        textView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        textView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        print("Hello")
-        
-        
+        print(i)
+        i += 1
+        return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 200)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 
 }
